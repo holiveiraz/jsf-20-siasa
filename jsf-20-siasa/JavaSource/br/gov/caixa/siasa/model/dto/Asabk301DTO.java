@@ -48,7 +48,6 @@ public final class Asabk301DTO extends CobolBook {
 	private String nuOcorrencias;
 	private List<Asabk301Lista> ocorrencias;
 
-
 	public Asabk301DTO() {
 		this.ocorrencias = new ArrayList<Asabk301Lista>();
 	}
@@ -107,88 +106,113 @@ public final class Asabk301DTO extends CobolBook {
 		private String vrDoacao;
 		private String vrEstornado;
 		private String nuAgencia;
-		
+
 		public final String getNuDoacao() {
 			return nuDoacao;
 		}
+
 		private void setNuDoacao(final String nuDoacao) {
 			this.nuDoacao = nuDoacao;
 		}
+
 		public final String getNuCPF() {
 			return nuCPF;
 		}
+
 		private void setNuCPF(final String nuCPF) {
 			this.nuCPF = nuCPF;
 		}
+
 		public final String getNuCPNJ() {
 			return nuCPNJ;
 		}
+
 		private void setNuCPNJ(final String nuCPNJ) {
 			this.nuCPNJ = nuCPNJ;
 		}
+
 		public final String getDtDoacao() {
 			return dtDoacao;
 		}
+
 		private void setDtDoacao(final String dtDoacao) {
 			this.dtDoacao = dtDoacao;
 		}
+
 		public final String getDtCompensacao() {
 			return dtCompensacao;
 		}
+
 		private void setDtCompensacao(final String dtCompensacao) {
 			this.dtCompensacao = dtCompensacao;
 		}
+
 		public final String getDtRemessa() {
 			return dtRemessa;
 		}
+
 		private void setDtRemessa(final String dtRemessa) {
 			this.dtRemessa = dtRemessa;
 		}
+
 		public final String getDtProcessamento() {
 			return dtProcessamento;
 		}
+
 		private void setDtProcessamento(final String dtProcessamento) {
 			this.dtProcessamento = dtProcessamento;
 		}
+
 		public final String getCoFinanceiro() {
 			return coFinanceiro;
 		}
+
 		private void setCoFinanceiro(final String coFinanceiro) {
 			this.coFinanceiro = coFinanceiro;
 		}
+
 		public final String getQtDiaBloqueio() {
 			return qtDiaBloqueio;
 		}
+
 		private void setQtDiaBloqueio(final String qtDiaBloqueio) {
 			this.qtDiaBloqueio = qtDiaBloqueio;
 		}
+
 		public final String getDtEstorno() {
 			return dtEstorno;
 		}
+
 		private void setDtEstorno(final String dtEstorno) {
 			this.dtEstorno = dtEstorno;
 		}
+
 		public final String getVrDoacao() {
 			return vrDoacao;
 		}
+
 		private void setVrDoacao(final String vrDoacao) {
 			this.vrDoacao = vrDoacao;
 		}
+
 		public final String getVrEstornado() {
 			return vrEstornado;
 		}
+
 		private void setVrEstornado(final String vrEstornado) {
 			this.vrEstornado = vrEstornado;
 		}
+
 		public final String getNuAgencia() {
 			return nuAgencia;
 		}
+
 		private void setNuAgencia(final String nuAgencia) {
 			this.nuAgencia = nuAgencia;
 		}
-		
+
 		protected void fromCICS(final String littleString) {
-			//TODO
+			// TODO
 		}
 	}
 
@@ -201,6 +225,6 @@ public final class Asabk301DTO extends CobolBook {
 	@Override
 	public void fromCICS(String bigString) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
