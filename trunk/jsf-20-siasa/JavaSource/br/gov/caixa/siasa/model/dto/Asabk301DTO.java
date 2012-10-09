@@ -3,6 +3,11 @@ package br.gov.caixa.siasa.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.validator.GenericValidator;
+import org.apache.log4j.Logger;
+
+import br.gov.caixa.siasa.exception.InvalidFieldException;
+
 /*
  01 ASABK301-AREA.
  03 NU-TAMANHO-NEG-BK301                      PIC 9(005).
@@ -42,6 +47,7 @@ public final class Asabk301DTO extends CobolBook {
 	 * 
 	 */
 	private static final long serialVersionUID = -7355834437852141240L;
+	private static final Logger logger = Logger.getLogger(Asabk301DTO.class);
 	private String dtDoacao;
 	private String dtCompensacao;
 	private String dtRemessa;
@@ -92,7 +98,7 @@ public final class Asabk301DTO extends CobolBook {
 		this.ocorrencias = ocorrencias;
 	}
 
-	public class Asabk301Lista {
+	public final class Asabk301Lista {
 		private String nuDoacao;
 		private String nuCPF;
 		private String nuCPNJ;
@@ -212,7 +218,57 @@ public final class Asabk301DTO extends CobolBook {
 		}
 
 		protected void fromCICS(final String littleString) {
-			// TODO
+			if (GenericValidator.isBlankOrNull(littleString)) {
+				throw new InvalidFieldException("Tripão de retorno inválido: nulo ou vazio");
+			}
+			try {
+				int beginIndex = 0;
+				setNuDoacao(littleString.substring(beginIndex, beginIndex + 12));
+				logger.debug("nuDoacao ["+getNuDoacao()+"]");
+				beginIndex += 11;
+				setNuCPF(littleString.substring(beginIndex, beginIndex + 11));
+				logger.debug("nuCPF ["+getNuCPF()+"]");
+				beginIndex += 11;
+				setNuCPNJ(littleString.substring(beginIndex, beginIndex + 14));
+				logger.debug("nuCNPJ ["+getNuCPNJ()+"]");
+				beginIndex += 14;
+				setDtDoacao(littleString.substring(beginIndex, beginIndex + 10));
+				logger.debug("dtDoacao ["+getDtDoacao()+"]");
+				beginIndex += 10;
+				setDtCompensacao(littleString.substring(beginIndex,beginIndex + 10));
+				logger.debug("dtCompensacao ["+getDtCompensacao()+"]");
+				beginIndex += 10;
+				setDtRemessa(littleString.substring(beginIndex, beginIndex + 10));
+				logger.debug("dtRemessa ["+getDtRemessa()+"]");
+				beginIndex += 10;
+				setDtProcessamento(littleString.substring(beginIndex,beginIndex + 10));
+				logger.debug("dtProcessamento ["+getDtProcessamento()+"]");
+				beginIndex += 10;
+				setCoFinanceiro(littleString.substring(beginIndex,beginIndex + 9));
+				logger.debug("coFinanceir ["+getCoFinanceiro()+"]");
+				beginIndex += 9;
+				setQtDiaBloqueio(littleString.substring(beginIndex,beginIndex + 4));
+				logger.debug("qtDiaBloqueio ["+getQtDiaBloqueio()+"]");
+				beginIndex += 4;
+				setDtEstorno(littleString.substring(beginIndex, beginIndex + 10));
+				logger.debug("dtEstorno ["+getDtEstorno()+"]");
+				beginIndex += 10;
+				setVrDoacao(littleString.substring(beginIndex, beginIndex + 15));
+				logger.debug("vrDoacao ["+getVrDoacao()+"]");
+				beginIndex += 15;
+				setVrEstornado(littleString.substring(beginIndex,beginIndex + 15));
+				logger.debug("vrEstornado ["+getVrEstornado()+"]");
+				beginIndex += 15;
+				setNuAgencia(littleString.substring(beginIndex, beginIndex + 4));
+				logger.debug("nuAgencia ["+getNuAgencia()+"]");
+				beginIndex += 4;
+			} catch (IndexOutOfBoundsException e) {
+				logger.error("Tripão inválido: " + littleString, e);
+				throw new InvalidFieldException("Tripão devolvido pelo CICS com tamanho inválido", e);
+			} catch (NumberFormatException e) {
+				logger.error("Tripão inválido: " + littleString, e);
+				throw new InvalidFieldException("Tripão devolvido pelo CICS contém dados com valor inesperado",e);
+			}
 		}
 	}
 
