@@ -12,6 +12,7 @@ public abstract class CobolBook implements Serializable {
     private static final char PICX_CHAR = ' ';
     private static final char PIC9_CHAR = '0';
     protected static final char FILLER = ' ';
+	protected static final String DATA_ZERADA = "00/00/0000";
     
 	private String coErroWblb;
 	private String deErroWblb;
