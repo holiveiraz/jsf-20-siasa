@@ -43,19 +43,81 @@ import br.gov.caixa.siasa.exception.InvalidFieldException;
  10 CO-ERRO-SQL-BK301                   PIC X(004).
  */
 public final class Asabk301DTO extends CobolBook {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7355834437852141240L;
 	private static final Logger logger = Logger.getLogger(Asabk301DTO.class);
+//	ENTRADA
 	private String dtDoacao;
 	private String dtCompensacao;
 	private String dtRemessa;
-	private String nuOcorrencias;
-	private List<Asabk301Lista> ocorrencias;
+//	SAIDA
+	private String nuOcorrencia;
+	private List<DoacaoCheque> doacaoCheque;
 
 	public Asabk301DTO() {
-		this.ocorrencias = new ArrayList<Asabk301Lista>();
+		this.doacaoCheque = new ArrayList<DoacaoCheque>();
+	}
+
+	@Override
+	public String toCICS() {
+		if(GenericValidator.isBlankOrNull(getDtRemessa())) {
+			setDtRemessa(DATA_ZERADA);
+		}
+		if(GenericValidator.isBlankOrNull(getDtCompensacao())) {
+			setDtCompensacao(DATA_ZERADA);
+		}
+		if(GenericValidator.isBlankOrNull(getDtDoacao())) {
+			setDtDoacao(DATA_ZERADA);
+		}
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(getDtDoacao());
+		builder.append(getDtCompensacao());
+		builder.append(getDtRemessa());
+		builder.append(getCoUsuario());
+		builder.append(getDeCertificacao());
+		
+		logger.debug("ENTRADA: ["+ builder.toString() +"]");
+		return builder.toString();
+	}
+
+	@Override
+	public void fromCICS(String bigString) {
+		if (GenericValidator.isBlankOrNull(bigString)) {
+			throw new InvalidFieldException("Tripão de retorno inválido: nulo ou vazio");
+		}
+		try {
+			int beginIndex = 43;
+			setNuOcorrencia(bigString.substring(beginIndex, beginIndex+3));
+			logger.debug("nuOcorrencia ["+getNuOcorrencia()+"]");
+			beginIndex += 3;
+			
+			logger.debug("===============  L I S T A  ===============");
+			int x = Integer.parseInt(getNuOcorrencia());
+			for(int i=0; i<x; i++) {
+				final String littleString = bigString.substring(beginIndex, beginIndex + 134);
+				final DoacaoCheque lancamento = new DoacaoCheque();
+				lancamento.fromCICS(littleString);
+				getDoacaoCheque().add(lancamento);
+				beginIndex += 134;
+			}
+			beginIndex += (134 * 30) - (134 * x);
+			setCoRetorno(bigString.substring(beginIndex, beginIndex+1));
+			logger.debug("coRetorno ["+getCoRetorno()+"]");
+			beginIndex += 1;
+			setDeMensagem(bigString.substring(beginIndex, beginIndex+80));
+			logger.debug("deMensagem ["+getDeMensagem()+"]");
+			beginIndex += 80;
+			setCoSqlcode(bigString.substring(beginIndex, beginIndex+4));
+			logger.debug("coSqlcode ["+getCoSqlcode()+"]");
+			beginIndex += 4;
+		} catch (IndexOutOfBoundsException e) {
+			logger.error("Tripão inválido: " + bigString, e);
+			throw new InvalidFieldException("Tripão devolvido pelo CICS com tamanho inválido", e);
+		} catch (NumberFormatException e) {
+			logger.error("Tripão inválido: " + bigString, e);
+			throw new InvalidFieldException("Tripão devolvido pelo CICS contém dados com valor inesperado",e);
+		}
 	}
 
 	public final String getDtDoacao() {
@@ -82,23 +144,23 @@ public final class Asabk301DTO extends CobolBook {
 		this.dtRemessa = dtRemessa;
 	}
 
-	public final String getNuOcorrencias() {
-		return nuOcorrencias;
+	public final String getNuOcorrencia() {
+		return nuOcorrencia;
 	}
 
-	public void setNuOcorrencias(final String nuOcorrencias) {
-		this.nuOcorrencias = nuOcorrencias;
+	public void setNuOcorrencia(final String nuOcorrencia) {
+		this.nuOcorrencia = nuOcorrencia;
 	}
 
-	public final List<Asabk301Lista> getOcorrencias() {
-		return ocorrencias;
+	public List<DoacaoCheque> getDoacaoCheque() {
+		return doacaoCheque;
 	}
 
-	public void setOcorrencias(final List<Asabk301Lista> ocorrencias) {
-		this.ocorrencias = ocorrencias;
+	public void setDoacaoCheque(List<DoacaoCheque> doacaoCheque) {
+		this.doacaoCheque = doacaoCheque;
 	}
 
-	public final class Asabk301Lista {
+	public final class DoacaoCheque {
 		private String nuDoacao;
 		private String nuCPF;
 		private String nuCPNJ;
@@ -225,7 +287,7 @@ public final class Asabk301DTO extends CobolBook {
 				int beginIndex = 0;
 				setNuDoacao(littleString.substring(beginIndex, beginIndex + 12));
 				logger.debug("nuDoacao ["+getNuDoacao()+"]");
-				beginIndex += 11;
+				beginIndex += 12;
 				setNuCPF(littleString.substring(beginIndex, beginIndex + 11));
 				logger.debug("nuCPF ["+getNuCPF()+"]");
 				beginIndex += 11;
@@ -270,17 +332,5 @@ public final class Asabk301DTO extends CobolBook {
 				throw new InvalidFieldException("Tripão devolvido pelo CICS contém dados com valor inesperado",e);
 			}
 		}
-	}
-
-	@Override
-	public String toCICS() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void fromCICS(String bigString) {
-		// TODO Auto-generated method stub
-
 	}
 }
