@@ -91,12 +91,12 @@ public final class Asabk307DTO extends CobolBook {
 			int x = Integer.parseInt(getNuOcorrencia());
 			for(int i=0; i<x; i++) {
 				final String littleString = bigString.substring(beginIndex, beginIndex + 121);
-				final RemessaRealizada lancamento = new RemessaRealizada();
-				lancamento.fromCICS(littleString);
-				getRemessaRealizada().add(lancamento);
+				final RemessaRealizada rr = new RemessaRealizada();
+				rr.fromCICS(littleString);
+				getRemessaRealizada().add(rr);
 				beginIndex += 121;
 			}
-			beginIndex += (121 * 30) - (121 * x);
+			beginIndex += (121 * (30 - x));
 			setCoRetorno(bigString.substring(beginIndex, beginIndex+1));
 			logger.debug("coRetorno ["+getCoRetorno()+"]");
 			beginIndex += 1;
