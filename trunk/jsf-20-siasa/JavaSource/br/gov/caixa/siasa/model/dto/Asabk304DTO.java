@@ -60,16 +60,16 @@ public final class Asabk304DTO extends CobolBook {
 			throw new InvalidFieldException("Tripão de retorno inválido: nulo ou vazio");
 		}
 		try {
-			int beginIndex = 43;
+			int beginIndex = 45;
 			setCoRetorno(bigString.substring(beginIndex, beginIndex+1));
 			logger.debug("coRetorno ["+getCoRetorno()+"]");
-			beginIndex =+ 1;
-			setDeMensagem(bigString.substring(beginIndex, beginIndex+80));
+			beginIndex += 1;
+			setDeMensagem(bigString.substring(beginIndex, beginIndex+80).trim());
 			logger.debug("deMensagem ["+getDeMensagem()+"]");
-			beginIndex =+ 80;
+			beginIndex += 80;
 			setCoSqlcode(bigString.substring(beginIndex, beginIndex+4));
 			logger.debug("coSqlcode ["+getCoSqlcode()+"]");
-			beginIndex =+ 4;
+			beginIndex += 4;
 		} catch (IndexOutOfBoundsException e) {
 			logger.error("Tripão inválido: " + bigString, e);
 			throw new InvalidFieldException("Tripão devolvido pelo CICS com tamanho inválido", e);

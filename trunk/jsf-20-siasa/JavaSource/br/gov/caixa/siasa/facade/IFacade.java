@@ -1,20 +1,22 @@
 package br.gov.caixa.siasa.facade;
 
+import br.gov.caixa.siasa.model.dto.CobolBook;
+
 public interface IFacade {
 
-	public void consultaLancamentoDoacaoEmCheque();
+	public void consultaLancamentoDoacaoEmCheque(CobolBook cb);
 
-	public void consultaLancamentoEstornoPendente();
+	public void consultaLancamentoEstornoPendente(CobolBook cb);
 
-	public void inclusaoEstornoCheque();
+	public void inclusaoEstornoCheque(CobolBook cb);
 
-	public void delecaoEstornoJaComandado();
+	public void delecaoEstornoJaComandado(CobolBook cb);
 
-	public void consultaLancamentoCheque();
+	public void consultaLancamentoCheque(CobolBook cb);
 
-	public void consultaApuracaoRealizada();
+	public void consultaApuracaoRealizada(CobolBook cb);
 
-	public void consultaRemessaJaRealizada();
+	public void consultaRemessaJaRealizada(CobolBook cb);
 
-	public void manutencaoTipoCancal();
+	public void manutencaoTipoCancal(CobolBook cb);
 }

@@ -1,5 +1,6 @@
 package br.gov.caixa.siasa.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.validator.GenericValidator;
@@ -45,6 +46,10 @@ public final class Asabk308DTO extends CobolBook {
 //	SAIDA
 	private String nuOcorrencia;
 	private List<TipoCanal> tipoCanal;
+
+	public Asabk308DTO() {
+		this.tipoCanal = new ArrayList<TipoCanal>();
+	}
 	
 	@Override
 	public String toCICS() {
@@ -70,7 +75,7 @@ public final class Asabk308DTO extends CobolBook {
 			throw new InvalidFieldException("Tripão de retorno inválido: nulo ou vazio");
 		}
 		try {
-			int beginIndex = 43;
+			int beginIndex = 85;
 			setNuOcorrencia(bigString.substring(beginIndex, beginIndex+3));
 			logger.debug("nuOcorrencia ["+getNuOcorrencia()+"]");
 			beginIndex += 3;
@@ -84,7 +89,7 @@ public final class Asabk308DTO extends CobolBook {
 				getTipoCanal().add(tc);
 				beginIndex += 63;
 			}
-			beginIndex += (63 * 30) - (63 * x);
+			beginIndex += (63 * (30-x));
 			setCoRetorno(bigString.substring(beginIndex, beginIndex+1));
 			logger.debug("coRetorno ["+getCoRetorno()+"]");
 			beginIndex += 1;
@@ -164,7 +169,7 @@ public final class Asabk308DTO extends CobolBook {
 				setCoTipoCanal(littleString.substring(beginIndex,beginIndex+3));
 				logger.debug("coTipoCanal ["+getCoTipoCanal()+"]");
 				beginIndex += 3;
-				setDeTipoCanal(littleString.substring(beginIndex,beginIndex+60));
+				setDeTipoCanal(littleString.substring(beginIndex,beginIndex+60).trim());
 				logger.debug("deTipoCanal ["+getDeTipoCanal()+"]");
 				beginIndex += 60;
 			} catch (IndexOutOfBoundsException e) {

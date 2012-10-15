@@ -19,11 +19,11 @@ public final class CicsDAO implements IDao {
 	private static final String target = "CICSASA";
 	private String noPrograma;
 	
-	public CicsDAO(String noPrograma) {
+	public CicsDAO(final String noPrograma) {
 		setNoPrograma(noPrograma);
 	}
 
-	private void setNoPrograma(String noPrograma) {
+	private void setNoPrograma(final String noPrograma) {
 		this.noPrograma = noPrograma;
 	}
 
