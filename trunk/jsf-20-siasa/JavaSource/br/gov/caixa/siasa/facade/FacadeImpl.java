@@ -51,7 +51,7 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public void manutencaoTipoCancal(final CobolBook cb) {
+	public void manutencaoTipoCanal(final CobolBook cb) {
 		dao = CicsDaoFactory.getDao("MOCKPO308");// ASAPO308
 		dao.execute(cb);
 	}

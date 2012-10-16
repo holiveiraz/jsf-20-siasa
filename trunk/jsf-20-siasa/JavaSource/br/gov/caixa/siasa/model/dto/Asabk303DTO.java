@@ -1,5 +1,6 @@
 package br.gov.caixa.siasa.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.validator.GenericValidator;
@@ -41,6 +42,10 @@ public final class Asabk303DTO extends CobolBook {
 //	SAIDA
 	private String nuOcorrencia;
 	private List<EstornoPendente> estornoPendente;
+
+	public Asabk303DTO() {
+		estornoPendente = new ArrayList<EstornoPendente>();
+	}
 	
 	public String getNuOcorrencia() {
 		return nuOcorrencia;

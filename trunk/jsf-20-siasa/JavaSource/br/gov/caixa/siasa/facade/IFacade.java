@@ -18,5 +18,5 @@ public interface IFacade {
 
 	public void consultaRemessaJaRealizada(CobolBook cb);
 
-	public void manutencaoTipoCancal(CobolBook cb);
+	public void manutencaoTipoCanal(CobolBook cb);
 }
