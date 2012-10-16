@@ -87,7 +87,7 @@ public final class Asabk301DTO extends CobolBook {
 			throw new InvalidFieldException("Tripão de retorno inválido: nulo ou vazio");
 		}
 		try {
-			int beginIndex = 43;
+			int beginIndex = 50;
 			setNuOcorrencia(bigString.substring(beginIndex, beginIndex+3));
 			logger.debug("nuOcorrencia ["+getNuOcorrencia()+"]");
 			beginIndex += 3;

@@ -22,13 +22,12 @@ public final class Asabk301CicsDAO extends MockCicsDAO implements IDao {
 			builder.append("02/02/0002");
 			builder.append("03/03/0003");
 			builder.append("04/04/0004");
-			builder.append("05/05/0005");
 			builder.append(pic(l+10L,9));
 			builder.append(pic(l+1L,4));
-			builder.append("06/06/0006");
+			builder.append("05/05/0005");
 			builder.append(pic(l+40000L,15));
 			builder.append(pic(l+20000L,15));
-			builder.append(pic(l+4063,4));
+			builder.append(pic(l+4064,4));
 		}
 		builder.append(pic(FILLER,3618));
 		builder.append('0');
